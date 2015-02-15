@@ -24,17 +24,21 @@ function writeResponse(response, string) {
 function foreignFile(response, docRoot, webPath) {
     docRoot = docRoot[docRoot.length-1] === '/' ? docRoot : docRoot + '/';
     webPath = docRoot + webPath;
-    
-    http.get(webPath, function(foreignResponse) {
-	foreignResponse.on('data', function(chunk) {
-	    var string = chunk.toString('utf-8');
-	    var re = /\<Message>Access Denied\<\/Message\>/;
 
+    http.get(webPath, function(foreignResponse) {
+	var string = '';
+	
+	foreignResponse.on('data', function(chunk) {
+	    string += chunk.toString('utf-8');
+	});
+
+	foreignResponse.on('end', function() {
+	    var re = /\<Message>Access Denied\<\/Message\>/;	
 	    if (re.test(string)) {
 		write404(response);
 	    } else {
 		writeResponse(response, string);
-	    }
+	    }	
 	});
     });
 }
