@@ -12,8 +12,7 @@ You can either host stuff locally, or pull from another HTTP server. To pull fro
 Todo
 ====
 
-1. I need to reimplement remote HTTP stream chunks to not be truncated but I don't feel like it, tonight.
-
+1. Add suppport for 404s on non Amazon S3 stores
 2. Add some kind of stupid features.
 
 License
